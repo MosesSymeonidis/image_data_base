@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+</head>
+<body><p/>
+   <div class="col-md-6 col-md-offset-3">
+
+          <div class="jumbotron" style="  background: #CCE6FF; border-radius: 10px">
+            <h1>Image DataBase</h1>
+            <p>This is a DataBase ...blablabla</p>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <h2>Upload</h2>
+              <p>Hear you can upload an image or some images in database. </p>
+              <p><a class="btn btn-default" href="/uploader/list" role="button"><span class="glyphicon glyphicon-floppy-open"></span> Upload</a></p>
+            </div><!--/span-->
+            <div class="col-md-6">
+              <h2>Search</h2>
+              <p>Search similar images in our Database. You can search image based on an image or group of images.</p>
+              <p><a class="btn btn-default" href="/uploader/query" role="button">
+              <span class="glyphicon glyphicon-search"></span> Search</a></p>
+
+            </div><!--/span-->
+
+          </div><!--/row-->
+    </div>
+
+</body>
+</html>

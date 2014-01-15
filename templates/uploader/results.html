@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <title>Minimal Django File Upload Example</title>
+            <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+        </head>
+
+        <body>
+                <!-- List of uploaded documents -->
+          <div class="col-md-6 col-md-offset-3">
+            <div class="row">
+
+                    {% if filelist %}
+                        <form role="form">
+                            {% for file in filelist %}
+                                <div class="col-md-12">
+                                    <img src="{{MEDIA_URL}}{{ file.1 }}" alt="{{ file.1 }}" class="img-responsive" alt="Responsive image">
+
+                                  <div class="checkbox">
+                                    <label>
+                                      <input type="checkbox" name="{{ file.1 }}" > {{ file.1 }}
+                                    </label>
+                                  </div>
+
+                                </div>
+                            {% endfor %}
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
+                    {% else %}
+                            <p>No documents.</p>
+                    {% endif %}
+
+            </div>
+          </div>
+        </body>
+
+</html> 
