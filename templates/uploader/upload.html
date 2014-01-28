@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Image Uploader</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+
+<div class="col-md-8 col-md-offset-2">
+    <div class="jumbotron" style="  background: #CCE6FF; border-radius: 10px">
+        <h1>Image DataBase</h1>
+
+        <p>Here you can upload your images.. Just push the button and choose your images...</p>
+    </div>
+
+    <div id="up">
+        <form action="" method="post" enctype="multipart/form-data" role="form">
+
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-2 col-md-offset-5">
+
+                    <div style="position:relative;">
+                        <a class='btn btn-default'>
+                            Choose Images...
+                            <input type="file" id="files" accept="image/*"
+                                   style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);opacity:0;background-color:transparent;color:transparent;'
+                                   onchange="fileSelected()" name="file" size="20" multiple>
+                        </a>
+
+                        <p/>
+
+                        <div id="fileName"></div>
+                    </div>
+                    </p>
+                    <p>
+                        <button type="submit" id="test" style="visibility: hidden" name="loaded-image"
+                                class="btn btn-success"
+                                value="Upload" onclick="on()"><span class="glyphicon glyphicon-floppy-open"></span>Upload
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <p><a class="btn btn-default" role="button" href="/home"><span class="glyphicon glyphicon-home"></span> HOME</a>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-4 col-md-offset-4"><img src="{{ MEDIA_URL }}Themes/465.GIF" class="img-responsive" id="lo"
+                                               style="visibility: hidden"></div>
+</div>
+
+</div>
+
+
+</body>
+
+</html>
+
+<script>
+    function on() {
+        document.getElementById('lo').style.visibility = 'visible';
+        document.getElementById('up').style.display = 'none'
+
+    }
+    function fileSelected() {
+        var files = document.getElementById('files').files;
+
+        if (files.length === 0) {
+            return;
+        }
+        f = '<p>The Images are:';
+        for (var i = 0; i < files.length; i++) {
+            if (files[i]) {
+
+                f = f + '<p><span class="label label-info">Image' + i.toString() + ': ' + files[i].name + "</span>";
+
+            }
+        }
+
+        document.getElementById('test').style.visibility = 'visible';
+        document.getElementById('fileName').innerHTML = f;
+
+
+    }</script>

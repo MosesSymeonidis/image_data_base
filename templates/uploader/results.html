@@ -1,44 +1,139 @@
 <!DOCTYPE html>
 <html>
-        <head>
-                <meta charset="utf-8">
-                <title>Minimal Django File Upload Example</title>
-            <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+<head>
+    <meta charset="utf-8">
+    <title>Database Results</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-        </head>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+</head>
 
-        <body>
-                <!-- List of uploaded documents -->
-          <div class="col-md-6 col-md-offset-3">
+<body>
+<!-- List of uploaded documents -->
+<div class="col-md-8 col-md-offset-2">
+<div class="jumbotron" style="  background: #CCE6FF; border-radius: 10px">
+        <h1>Image DataBase</h1>
+
+        <p>Here are result images.. Just select the most relative images...</p>
+    </div>
+    <div class="row">
+
+        {% if filelist %}
+
+            <form action="" method="post" role="form">{% csrf_token %}
             <div class="row">
+                {% for file in filelist %}
+                    <div class="col-md-4">
+                        <img src="{{ MEDIA_URL }}{{ file.1 }}" alt="{{ file.1 }}" class="img-responsive"
+                             alt="Responsive image">
 
-                    {% if filelist %}
-                        <form role="form">
-                            {% for file in filelist %}
-                                <div class="col-md-12">
-                                    <img src="{{MEDIA_URL}}{{ file.1 }}" alt="{{ file.1 }}" class="img-responsive" alt="Responsive image">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="{{ file.1 }}" value="{{ file.1 }}"> {{ file.1 }}
+                            </label>
+                        </div>
 
-                                  <div class="checkbox">
-                                    <label>
-                                      <input type="checkbox" name="{{ file.1 }}" > {{ file.1 }}
-                                    </label>
-                                  </div>
-
-                                </div>
-                            {% endfor %}
-                            <button type="submit" class="btn btn-default">Submit</button>
-                        </form>
-                    {% else %}
-                            <p>No documents.</p>
-                    {% endif %}
-
+                    </div>
+                {% endfor %}
             </div>
-          </div>
-        </body>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">General Settings:</div>
+                            <div class="panel-body">
+                                <p>Num of Results:
+                                    <input type="number" data-bind="value:replyNumber" class="form-control" value="1"
+                                           id="number" min="1"
+                                           name="text" required/></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Histogram Dominance:</div>
+                            <div class="panel-body">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsHist" id="ColorOnly" value="1">
+                                        ColorOnly
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsHist" id="MostlyColor" value="0.75">
+                                        MostlyColor
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsHist" id="Balanced" value="0.5" checked>
+                                        Balanced
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsHist" id="MostlyTexture" value="0.25">
+                                        MostlyTexture
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsHist" id="OnlyTexture" value="0">
+                                        OnlyTexture
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Distance:</div>
+                            <div class="panel-body">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsDist" id="distance" value="distance" checked>
+                                        Euclid
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsDist" id="taxicab" value="taxicab">
+                                        Taxicab
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsDist" id="chebyshev" value="chebyshev">
+                                        Chebyshev
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="row">
+                <div class="col-md-2 col-md-offset-4">
+                <a class="btn btn-default" href="/query"><span class="glyphicon glyphicon-chevron-left"></span>New Query</a></div>
+                <div class="col-md-2 ">
+                <button type="submit" class="btn btn-primary"><span
+                        class="glyphicon glyphicon-search"></span>Run Query</button></div>
+            </div>
+            </form>
+        {% else %}
+            <p>No documents.</p>
+        {% endif %}
+
+    </div>
+     <div class="row">
+        <a class="btn btn-default" role="button" href="/home"><span class="glyphicon glyphicon-home"></span> HOME</a>
+    </div>
+</div>
+</body>
 
 </html> 

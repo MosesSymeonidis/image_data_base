@@ -51,7 +51,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'teliko.urls'
-
+SESSION_EXPIRE_AT_BROWSER_CLOSE=True
 
 
 WSGI_APPLICATION = 'teliko.wsgi.application'
