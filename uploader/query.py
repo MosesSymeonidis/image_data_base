@@ -3,10 +3,10 @@ from django.db import connection
 
 def querydb(distance, histWeight, numofresults, megaColor, megaTexture):
     cursor = connection.cursor()
-    arxiko = 'select * from "Pictures" order by image_' + str(distance) + '("color",\''
-    mesaio = '\', "texture", \''
-    teliko = '\',' + str(histWeight) + ') limit ' + str(numofresults)
-    query = arxiko + str(megaColor) + mesaio + str(megaTexture) + teliko
+    first = 'select * from "Pictures" order by image_' + str(distance) + '("color",\''
+    middle = '\', "texture", \''
+    last = '\',' + str(histWeight) + ') limit ' + str(numofresults)
+    query = first + str(megaColor) + middle + str(megaTexture) + last
     cursor.execute(query)
     filelist = cursor.fetchall()
     cursor.close()
@@ -14,10 +14,10 @@ def querydb(distance, histWeight, numofresults, megaColor, megaTexture):
 
 def weighted_dist(megaColor, megaTexture, numofresults,weight_col,weight_tex,histWeight):
     cursor = connection.cursor()
-    arxiko = 'select * from "Pictures" order by weightedDist("color",\''
-    mesaio = '\', "texture", \''
-    teliko = '\',\'' + str(weight_col) + " ',' "+str(weight_tex)+'\' ,'+str(histWeight)+') limit ' + str(numofresults)
-    query = arxiko + str(megaColor) + mesaio + str(megaTexture) + teliko
+    first = 'select * from "Pictures" order by weightedDist("color",\''
+    middle = '\', "texture", \''
+    last = '\',\'' + str(weight_col) + " ',' "+str(weight_tex)+'\' ,'+str(histWeight)+') limit ' + str(numofresults)
+    query = first + str(megaColor) + middle + str(megaTexture) + last
     cursor.execute(query)
     filelist = cursor.fetchall()
     cursor.close()

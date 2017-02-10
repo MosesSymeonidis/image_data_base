@@ -1,5 +1,5 @@
 """
-WSGI config for teliko project.
+WSGI config for image_data_base project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
