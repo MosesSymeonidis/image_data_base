@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
 from django import forms
-from query import querydb
+from query import *
 from queryRocchio import rocMeth
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse
 from uploader.models import Pictures
 from histEx import histogram
 from django import shortcuts
+from queryWeighted import weightMed
 
 
 def upload(request):
@@ -99,13 +100,25 @@ def results(request):
             if Qdict.__contains__(str(file[1])):
                 files.append(file)
         numofresults = request.POST['text']
-
+        color=request.session.get('colorHistogram')
+        texture=request.session.get('textureHistogram')
         histWeight = request.POST['optionsHist']
-        distance = request.POST['optionsDist']
+
+        methodrf=request.POST['rf']
         if (len(files) != 0):
-            megaColor, megaTexture = rocMeth(request.session.get('colorHistogram'),
-                                             request.session.get('textureHistogram'), files, 8, 8)
-            filelist = querydb(distance, histWeight, numofresults, megaColor, megaTexture)
+            if methodrf=="rocchio":
+                distance = request.POST['optionsDist']
+                megaColor, megaTexture = rocMeth(color,texture, files, 8, 8)
+                filelist = querydb(distance, histWeight, numofresults, megaColor, megaTexture)
+            elif methodrf=="weighted":
+                weight_col,weight_tex=weightMed(get_all(),files)
+                print(len(weight_tex))
+                print(len(weight_col))
+                filelist = weighted_dist(tuple(color), tuple(texture), numofresults,weight_col,weight_tex,histWeight)
+            else:
+                megaColor, megaTexture = rocMeth(color,texture, files, 8, 8)
+                weight_col,weight_tex=weightMed(get_all(),files)
+                filelist = weighted_dist(megaColor, megaTexture, numofresults,weight_col,weight_tex,histWeight)
             request.session['filelist'] = filelist
 
     return render_to_response('uploader/results.html', {'filelist': filelist}, context_instance=RequestContext(request))

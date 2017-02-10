@@ -1,5 +1,5 @@
 """
-Django settings for teliko project.
+Django settings for image_data_base project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.6/topics/settings/
@@ -50,11 +50,11 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'teliko.urls'
+ROOT_URLCONF = 'image_data_base.urls'
 SESSION_EXPIRE_AT_BROWSER_CLOSE=True
 
 
-WSGI_APPLICATION = 'teliko.wsgi.application'
+WSGI_APPLICATION = 'image_data_base.wsgi.application'
 
 
 # Database

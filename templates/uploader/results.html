@@ -15,31 +15,31 @@
 <body>
 <!-- List of uploaded documents -->
 <div class="col-md-8 col-md-offset-2">
-<div class="jumbotron" style="  background: #CCE6FF; border-radius: 10px">
+    <div class="jumbotron" style="  background: #CCE6FF; border-radius: 10px">
         <h1>Image DataBase</h1>
 
-        <p>Here are result images.. Just select the most relative images...</p>
+        <p>Results, results, results! If you're not satisfied, just search again! We've implemented Relevance Feedback for you!</p>
     </div>
     <div class="row">
 
         {% if filelist %}
 
             <form action="" method="post" role="form">{% csrf_token %}
-            <div class="row">
-                {% for file in filelist %}
-                    <div class="col-md-4">
-                        <img src="{{ MEDIA_URL }}{{ file.1 }}" alt="{{ file.1 }}" class="img-responsive"
-                             alt="Responsive image">
+                <div class="row">
+                    {% for file in filelist %}
+                        <div class="col-md-4">
+                            <img src="{{ MEDIA_URL }}{{ file.1 }}" alt="{{ file.1 }}" class="img-responsive"
+                                 alt="Responsive image">
 
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="{{ file.1 }}" value="{{ file.1 }}"> {{ file.1 }}
-                            </label>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="{{ file.1 }}" value="{{ file.1 }}"> {{ file.1 }}
+                                </label>
+                            </div>
+
                         </div>
-
-                    </div>
-                {% endfor %}
-            </div>
+                    {% endfor %}
+                </div>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="panel panel-default">
@@ -97,19 +97,19 @@
                             <div class="panel-body">
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="optionsDist" id="distance" value="distance" checked>
+                                        <input type="radio" name="optionsDist" id="distance" value="distance" checked disabled>
                                         Euclid
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="optionsDist" id="taxicab" value="taxicab">
+                                        <input type="radio" name="optionsDist" id="taxicab" value="taxicab" disabled>
                                         Taxicab
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="optionsDist" id="chebyshev" value="chebyshev">
+                                        <input type="radio" name="optionsDist" id="chebyshev" value="chebyshev" disabled>
                                         Chebyshev
                                     </label>
                                 </div>
@@ -117,23 +117,75 @@
                         </div>
                     </div>
                 </div>
-            <div class="row">
-                <div class="col-md-2 col-md-offset-4">
-                <a class="btn btn-default" href="/query"><span class="glyphicon glyphicon-chevron-left"></span>New Query</a></div>
-                <div class="col-md-2 ">
-                <button type="submit" class="btn btn-primary"><span
-                        class="glyphicon glyphicon-search"></span>Run Query</button></div>
-            </div>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Feedback Method:</div>
+                            <div class="panel-body">
+
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="rf" id="weighted" value="weighted" checked
+                                               onchange="disableDistance();">
+                                        Weighted
+                                    </label>
+                                </div>
+
+
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="rf" id="rocchio" value="rocchio"
+                                               onchange="enableDistance();">
+                                        Rocchio
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="rf" id="weightedrocchio" value="weightedrocchio"
+                                               onchange="disableDistance();">
+                                        Weighted Rocchio
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 col-md-offset-4">
+                        <a class="btn btn-default" href="/query"><span class="glyphicon glyphicon-chevron-left"></span>New
+                            Query</a></div>
+                    <div class="col-md-2 ">
+                        <button type="submit" class="btn btn-primary"><span
+                                class="glyphicon glyphicon-search"></span>Run Query
+                        </button>
+                    </div>
+                </div>
             </form>
         {% else %}
             <p>No documents.</p>
         {% endif %}
 
     </div>
-     <div class="row">
+    <div class="row">
         <a class="btn btn-default" role="button" href="/home"><span class="glyphicon glyphicon-home"></span> HOME</a>
     </div>
 </div>
 </body>
 
-</html> 
+</html>
+
+<script>
+     function disableDistance() {
+            document.getElementById('distance').disabled=true;
+            document.getElementById('taxicab').disabled=true;
+            document.getElementById('chebyshev').disabled=true;
+        }
+
+        function enableDistance() {
+            document.getElementById('distance').disabled=false;
+            document.getElementById('taxicab').disabled=false;
+            document.getElementById('chebyshev').disabled=false;
+        }
+
+        </script>
